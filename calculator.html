@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Calculator</title>
+    <link rel="stylesheet" href="calc.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h2>Course Revenue Calculator</h2>
+            <img src="your_logo.png" alt="Your Logo" class="logo">
+            
+        </div>
+        <p class="informations">
+            CPM stands for "Cost Per Mille" (Mille is Latin for thousand). In the context of YouTube (and online advertising in general), CPM represents the amount an advertiser pays for 1000 ad views or impressions.  It's a way for advertisers to pay for their ads being shown, regardless of whether viewers click on them.   
+
+            How CPM Works on YouTube:
+
+           <span> Advertiser Sets CPM Bid: Advertisers decide how much they're willing to pay for 1000 ad impressions. This is their CPM bid.</span>   
+           <span> YouTube Ad Auction: When a video is played, YouTube's system runs an auction to determine which ad to show. Factors like the advertiser's bid, ad quality, and audience targeting play a role.  </span> 
+            <span>Ad Displayed: If the advertiser's bid is high enough, their ad is shown.</span>
+            <span>CPM Calculated: The advertiser pays the agreed-upon CPM for every 1000 times their ad is displayed.
+                How YouTube Creators Earn from CPM:</span>
+
+            YouTube creators earn a portion of the revenue generated from the ads shown on their videos.  However, it's not a simple calculation based directly on the advertiser's CPM.  Here's a breakdown:   
+            </p>
+            <p class="informations">
+                <span>
+                    Monetization: Creators need to be part of the YouTube Partner Program (YPP) to monetize their videos. This has certain eligibility requirements (subscribers, watch hours, etc.).
+                </span>
+                <span>
+                    Ad Revenue Sharing: YouTube takes a cut of the ad revenue, and the creator receives the remaining portion. The exact percentage isn't publicly disclosed, but it's generally understood to be around 55% for creators.
+                </span>
+            <p>Factors Affecting Earnings:
+                <span>
+                    CPM: Higher CPMs generally lead to higher earnings for creators.
+                    Ad Views: More ad views mean more potential revenue.
+                    Ad Engagement: While CPM is based on impressions, ads that are more engaging (e.g., viewers watch a significant portion or click on them) tend to be prioritized by YouTube's algorithm, potentially leading to more ad views and higher CPMs over time.
+                    Audience Demographics: Advertisers are often willing to pay more to reach specific demographics. If a creator's audience is highly valued by advertisers, they may see higher CPMs.
+                    Video Content: The type of content can influence CPM. Some niches tend to attract higher-paying advertisers.   
+                    Ad Blockers: Ad blockers reduce the number of ad impressions, and therefore, the revenue a creator can earn.   
+                    Calculating Estimated YouTube Revenue (Simplified):
+                </span>
+            </p>
+           
+            The calculation in your revenue calculator is a simplified version. It gives an estimate but won't be perfectly accurate because YouTube's revenue-sharing system is more complex.
+            </p>
+            <p class="informations">
+            Estimated YouTube Revenue = (Number of Views / 1000) * CPM
+            Important Notes:
+
+            <span>All YouTube Payment Methods:
+                <span>
+                    RPM (Revenue Per Mille): While CPM is what advertisers pay, creators often focus on RPM, which is the actual revenue they earn per 1000 views. RPM takes into account various factors, including YouTube's cut.   
+                    Not All Views Are Monetized: Not every view on a YouTube video will result in an ad being shown. Factors like ad availability, viewer location, and whether the viewer is a YouTube Premium subscriber can affect this.   
+                    Fluctuating CPMs: CPMs can vary significantly depending on the time of year, advertiser demand, and other factors.   
+                </span>
+            </span>
+
+            YouTube creators can earn money through several methods, not just CPM-based ads:   
+            </p>
+
+            <p class="informations">
+                Ad Revenue (CPM/RPM): As described above.
+                Channel Memberships: Fans can pay a recurring fee to become members of a channel, gaining access to exclusive perks.   
+                Super Chat & Super Stickers: Viewers can pay to have their messages highlighted in live chat during live streams.   
+                Merchandise Shelf: Creators can feature merchandise directly on their YouTube pages.   
+                YouTube Premium Revenue: Creators earn a portion of the subscription fees from YouTube Premium subscribers who watch their content
+         </p>
+        <div class="input-section">
+            <label for="youtube-views">YouTube Views:</label>
+            <input type="number" id="youtube-views" placeholder="Enter views">
+            <label for="youtube-cpm">YouTube CPM:</label>
+            <input type="number" id="youtube-cpm" placeholder="Enter CPM">
+
+            <label for="twitch-subs">Twitch Subscribers:</label>
+            <input type="number" id="twitch-subs" placeholder="Enter subscribers">
+            <label for="twitch-sub-price">Twitch Sub Price:</label>
+            <input type="number" id="twitch-sub-price" placeholder="Enter sub price">
+
+            <label for="payment-method">Payment Method:</label>
+            <select id="payment-method">
+                <option value="youtube">YouTube (CPM)</option>
+                <option value="twitch">Twitch (Subscriptions)</option>
+                <option value="both">Both</option>
+            </select>
+        </div>
+
+        <div class="result-section">
+            <h3>Estimated Revenue:</h3>
+            <p id="total-revenue">$0.00</p>
+        </div>
+        <button id="calculate-button">Calculate</button>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
