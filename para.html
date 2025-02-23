@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz</title>
+<style>
+  .question { margin-bottom: 20px; }
+  .explanation { display: none; margin-top: 10px; color: gray; }
+  .correct { color: green; }
+  .incorrect { color: red; }
+</style>
+</head>
+<body>
+
+<h1>Quiz</h1>
+
+<div id="quiz-container"></div>
+
+<script>
+const quizContainer = document.getElementById('quiz-container');
+
+const questions = [
+  // Explanation-based questions (20)
+  {
+    type: "explanation",
+    question: "Explain the concept of photosynthesis.",
+    answer: "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods from carbon dioxide and water. Oxygen is released as a byproduct.",
+    explanation: "This is the core process by which plants convert light energy into chemical energy."
+  },
+  {
+      type: "explanation",
+      question: "What is the significance of the water cycle?",
+      answer: "The water cycle, also known as the hydrologic cycle, is essential for sustaining life on Earth. It continuously circulates water between the oceans, atmosphere, and land, replenishing freshwater sources, regulating temperature, and supporting ecosystems.",
+      explanation: "Without the water cycle, life as we know it wouldn't exist."
+  },
+  // ... 18 more explanation-based questions
+
+  // Multiple-choice questions (80)
+  {
+    type: "multiple-choice",
+    question: "What is the capital of France?",
+    options: ["Berlin", "Madrid", "Paris", "Rome"],
+    answer: "Paris",
+    explanation: "Paris is the capital and most populous city of France."
+  },
+  {
+    type: "multiple-choice",
+    question: "Which planet is known as the 'Red Planet'?",
+    options: ["Jupiter", "Mars", "Venus", "Saturn"],
+    answer: "Mars",
+    explanation: "Mars appears reddish due to iron oxide on its surface."
+  },
+    {
+    type: "multiple-choice",
+    question: "What is the largest mammal in the world?",
+    options: ["African Elephant", "Blue Whale", "Polar Bear", "Giraffe"],
+    answer: "Blue Whale",
+    explanation: "Blue whales are the largest animals ever known to have lived."
+  },
+  {
+    type: "multiple-choice",
+    question: "How many continents are there?",
+    options: ["5", "6", "7", "8"],
+    answer: "7",
+    explanation: "The seven continents are: Africa, Antarctica, Asia, Australia, Europe, North America, and South America."
+  },
+    {
+    type: "multiple-choice",
+    question: "What is the chemical symbol for gold?",
+    options: ["Go", "Gd", "Au", "Ag"],
+    answer: "Au",
+    explanation: "Au is derived from the Latin word 'aurum'."
+  },
+  // ... 75 more multiple-choice questions
+];
+
+
+function displayQuestions() {
+  questions.forEach((questionData, index) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'question';
+    questionDiv.innerHTML = `<h3>${index + 1}. ${questionData.question}</h3>`;
+
+    if (questionData.type === "multiple-choice") {
+      questionData.options.forEach(option => {
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = `q${index}`;
+        input.id = `q${index}-${option}`;
+        input.value = option;
+
+        const label = document.createElement('label');
+        label.htmlFor = `q${index}-${option}`;
+        label.textContent = option;
+
+        questionDiv.appendChild(input);
+        questionDiv.appendChild(label);
+        questionDiv.appendChild(document.createElement('br'));
+      });
+    } else if (questionData.type === "explanation") {
+      const textarea = document.createElement('textarea');
+      textarea.rows = 4; // Adjust as needed
+      textarea.cols = 50; // Adjust as needed
+      questionDiv.appendChild(textarea);
+
+    }
+
+    const explanationDiv = document.createElement('div');
+    explanationDiv.className = 'explanation';
+    explanationDiv.textContent = questionData.explanation;
+    questionDiv.appendChild(explanationDiv);
+
+    quizContainer.appendChild(questionDiv);
+  });
+}
+
+
+
+displayQuestions();
+
+
+</script>
+
+</body>
+</html>

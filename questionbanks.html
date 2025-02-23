@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>100 Question Quiz</title>
+    <style>
+       
+#quiz-container {
+  width: 550px; 
+  margin: 20px auto; 
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #f9f9f9; /* Light background color */
+}
+
+/* Styling for individual questions */
+.question {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd; /* Slightly lighter border */
+  border-radius: 5px;
+  background-color: white; /* White background for questions */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Softer shadow */
+  transition: transform 0.2s; /* Add a transition for hover effect */
+}
+
+.question:hover {
+  transform: translateY(-2px); /* Move slightly up on hover */
+}
+
+.question h3 {
+  margin-top: 0; /* Remove default margin from h3 */
+  color: #333; /* Darker heading color */
+}
+
+/* Styling for the options (radio buttons and labels) */
+.options {
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #555; /* Slightly lighter text color for options */
+  transition: color 0.2s; /* Add a transition for hover effect */
+}
+
+label:hover {
+  color: #007bff; /* Blue color on hover (or your preferred color) */
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Styling for the result messages */
+.result {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+/* Styling for the submit button */
+button {
+  background-color: #007bff; /* Blue button */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Optional: Add some spacing around the quiz */
+body {
+  padding: 20px;
+}
+/* ... (Previous CSS styles) ... */
+
+.options {
+  margin-top: 10px;
+  display: flex; /* Use flexbox for side-by-side arrangement */
+  flex-wrap: wrap; /* Allow wrapping if there are too many options */
+  gap: 5px; /* Spacing between options */
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  transition: background-color 0.2s, border-color 0.2s;
+  flex: 1; /* Distribute space evenly among options */ /* or auto if you don't want them to be equal width */
+  min-width: 150px; /* Minimum width for each option (adjust as needed) */ /* remove it if you use flex:1 */
+}
+
+.options label:hover {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.options input[type="radio"] {
+  margin-right: 8px;
+}
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <h1>100 Question Quiz</h1>
+</div>
+
+<script>
+const quizContainer = document.getElementById('quiz-container');
+
+quizContainer.style.color = "black";
+quizContainer.style.backgroundColor = 'white'
+
+const questions = [
+  {
+    question: "What does HTML stand for?",
+    options: ["HyperText Markup Language", "High-Tech Modern Language", "Hyperlink and Text Markup Language", "Home Tool Markup Language"],
+    correctAnswer: "HyperText Markup Language"
+  },
+  {
+    question: "Which tag is used to create a hyperlink in HTML?",
+    options: ["<link>", "<a>", "<url>", "<href>"],
+    correctAnswer: "<a>"
+  },
+  {
+    question: "What is the correct way to add a CSS stylesheet to an HTML document?",
+    options: ["<style src='style.css'>", "<link rel='stylesheet' href='style.css'>", "<css href='style.css'>", "<stylesheet>style.css</stylesheet>"],
+    correctAnswer: "<link rel='stylesheet' href='style.css'>"
+  },
+  {
+    question: "Which tag is used to define the structure of an HTML table?",
+    options: ["<table>", "<div>", "<span>", "<form>"],
+    correctAnswer: "<table>"
+  },
+  {
+    question: "What does CSS stand for?",
+    options: ["Cascading Style Sheets", "Creative Style System", "Colorful Style Solution", "Computer Style Syntax"],
+    correctAnswer: "Cascading Style Sheets"
+  },
+  {
+    question: "Which CSS property is used to change the background color of an element?",
+    options: ["bgcolor", "background-color", "color-background", "background"],
+    correctAnswer: "background-color"
+  },
+  {
+    question: "Which HTML tag is used to create an ordered list?",
+    options: ["<ul>", "<ol>", "<li>", "<dl>"],
+    correctAnswer: "<ol>"
+  },
+  {
+    question: "Which HTML tag is used to create an unordered list?",
+    options: ["<ul>", "<ol>", "<li>", "<dl>"],
+    correctAnswer: "<ul>"
+  },
+  {
+    question: "What is the purpose of the HTML `<head>` tag?",
+    options: ["To display the main content of the page", "To define the metadata and links to stylesheets", "To create a header section on the page", "To include JavaScript code"],
+    correctAnswer: "To define the metadata and links to stylesheets"
+  },
+  {
+    question: "Which HTML tag is used to define a paragraph?",
+    options: ["<p>", "<text>", "<paragraph>", "<section>"],
+    correctAnswer: "<p>"
+  },
+  {
+    question: "Which tag is used to create a line break in HTML?",
+    options: ["<br>", "<lb>", "<newline>", "<break>"],
+    correctAnswer: "<br>"
+  },
+  {
+    question: "Which CSS property is used to change the font size of text?",
+    options: ["font-size", "text-size", "font-style", "size-font"],
+    correctAnswer: "font-size"
+  },
+  {
+    question: "Which HTML tag is used to embed an image?",
+    options: ["<img>", "<picture>", "<image>", "<src>"],
+    correctAnswer: "<img>"
+  },
+  {
+    question: "What is the purpose of the HTML `<body>` tag?",
+    options: ["To define the header of the document", "To contain the main content of the document", "To link to external resources", "To specify the document type"],
+    correctAnswer: "To contain the main content of the document"
+  },
+  {
+    question: "Which HTML tag is used to define a heading?",
+    options: ["<h1> to <h6>", "<heading>", "<title>", "<header>"],
+    correctAnswer: "<h1> to <h6>"
+  },
+  {
+    question: "Which CSS property is used to change the text color?",
+    options: ["text-color", "font-color", "color", "textcolor"],
+    correctAnswer: "color"
+  },
+  {
+    question: "Which HTML tag is used to create a form?",
+    options: ["<form>", "<input>", "<form-element>", "<data-entry>"],
+    correctAnswer: "<form>"
+  },
+  {
+    question: "Which HTML tag is used to define an input field in a form?",
+    options: ["<input>", "<text>", "<field>", "<form-input>"],
+    correctAnswer: "<input>"
+  },
+  {
+    question: "Which attribute is used to specify the type of input in an HTML form?",
+    options: ["type", "input-type", "form-type", "element-type"],
+    correctAnswer: "type"
+  },
+  {
+    question: "What is the purpose of the HTML `<title>` tag?",
+    options: ["To display the title on the page", "To define the title of the document in the browser's title bar", "To create a heading on the page", "To specify the document type"],
+    correctAnswer: "To define the title of the document in the browser's title bar"
+  },
+  {
+    question: "Which CSS property is used to make text bold?",
+    options: ["font-weight: bold", "text-weight: bold", "font-style: bold", "text-style: bold"],
+    correctAnswer: "font-weight: bold"
+  },
+  {
+    question: "Which HTML tag is used to create a division or a section in an HTML document?",
+    options: ["<div>", "<span>", "<section>", "<article>"],
+    correctAnswer: "<div>"
+  },
+  {
+    question: "Which HTML tag is used to create an inline container for text or other elements?",
+    options: ["<div>", "<span>", "<section>", "<inline>"],
+    correctAnswer: "<span>"
+  },
+  {
+    question: "Which CSS property is used to align text to the center?",
+    options: ["text-align: center", "align-text: center", "text-alignment: center", "align: center"],
+    correctAnswer: "text-align: center"
+  },
+  {
+    question: "Which HTML tag is used to create a button?",
+    options: ["<button>", "<input type='button'>", "<btn>", "<form-button>"],
+    correctAnswer: "<button>"
+  },
+  {
+    question: "Which CSS property is used to add a border to an element?",
+    options: ["border", "border-style", "border-width", "border-color"],
+    correctAnswer: "border"
+  },
+  {
+    question: "What does the `id` attribute in HTML do?",
+    options: ["It specifies a class for the element.", "It provides a unique identifier for the element.", "It defines the style of the element.", "It links the element to a JavaScript function."],
+    correctAnswer: "It provides a unique identifier for the element."
+  },
+  {
+    question: "What does the `class` attribute in HTML do?",
+    options: ["It provides a unique identifier for the element.", "It specifies a class or group of classes for the element.", "It defines the style of the element.", "It links the element to a JavaScript function."],
+    correctAnswer: "It specifies a class or group of classes for the element."
+  },
+  {
+    question: "Which HTML tag is used to create a definition list?",
+    options: ["<ul>", "<ol>", "<li>", "<dl>"],
+    correctAnswer: "<dl>"
+  },
+  {
+    question: "Which HTML tag is used to define a term in a definition list?",
+    options: ["<dt>", "<dd>", "<dl-term>", "<definition-term>"],
+    correctAnswer: "<dt>"
+  },
+  {
+    question: "Which HTML tag is used to define a description in a definition list?",
+    options: ["<dt>", "<dd>", "<dl-description>", "<definition-description>"],
+    correctAnswer: "<dd>"
+  },
+  {
+    question: "Which CSS property is used to control the spacing between lines of text?",
+    options: ["line-height", "letter-spacing", "word-spacing", "text-spacing"],
+    correctAnswer: "line-height"
+  },
+  {
+    question: "Which CSS property is used to control the spacing between characters in text?",
+    options: ["line-height", "letter-spacing", "word-spacing", "text-spacing"],
+    correctAnswer: "letter-spacing"
+  },
+  {
+    question: "Which CSS property is used to control the spacing between words in text?",
+    options: ["line-height", "letter-spacing", "word-spacing", "text-spacing"],
+    correctAnswer: "word-spacing"
+  },
+  {
+    question: "Which HTML tag is used to create a table row?",
+    options: ["<tr>", "<td>", "<th>", "<table>"],
+    correctAnswer: "<tr>"
+  },
+  {
+    question: "Which HTML tag is used to create a table cell?",
+    options: ["<tr>", "<td>", "<th>", "<table>"],
+    correctAnswer: "<td>"
+  },
+  {
+    question: "Which HTML tag is used to create a table header cell?",
+    options: ["<tr>", "<td>", "<th>", "<table>"],
+    correctAnswer: "<th>"
+  },
+  {
+    question: "Which CSS property is used to set the font family of text?",
+    options: ["font-family", "font-style", "font-weight", "font-size"],
+    correctAnswer: "font-family"
+  },
+  {
+    question: "Which CSS property is used to make text italic?",
+    options: ["font-style: italic", "text-style: italic", "font-weight: italic", "text-weight: italic"],
+    correctAnswer: "font-style: italic"
+  },
+  {
+    question: "Which CSS property is used to underline text?",
+    options: ["text-decoration: underline", "text-style: underline", "text-line: underline", "underline-text"],
+    correctAnswer: "text-decoration: underline"
+  },
+  {
+    question: "Which CSS property is used to remove the underline from a link?",
+    options: ["text-decoration: none", "text-style: none", "text-line: none", "remove-underline"],
+    correctAnswer: "text-decoration: none"
+  },
+  {
+    question: "Which HTML tag is used to create a horizontal rule (line)?",
+    options: ["<hr>", "<line>", "<rule>", "<horizontal-line>"],
+    correctAnswer: "<hr>"
+  },
+  {
+    question: "Which HTML tag is used to define metadata about an HTML document?",
+    options: ["<meta>", "<data>", "<info>", "<metadata>"],
+    correctAnswer: "<meta>"
+  },
+  {
+    question: "Which attribute is used to specify the character set for an HTML document?",
+    options: ["charset", "encoding", "characters", "char-set"],
+    correctAnswer: "charset"
+  },
+  {
+    question: "Which HTML tag is used to embed a video?",
+    options: ["<video>", "<movie>", "<media>", "<embed>"],
+    correctAnswer: "<video>"
+  },
+  {
+    question: "Which HTML tag is used to embed audio?",
+    options: ["<audio>", "<sound>", "<media>", "<embed>"],
+    correctAnswer: "<audio>"
+  },
+  {
+    question: "Which HTML tag is used to create a navigation menu?",
+    options: ["<nav>", "<menu>", "<navigation>", "<links>"],
+    correctAnswer: "<nav>"
+  },
+  {
+    question: "Which HTML tag is used to define a header for a document or a section?",
+    options: ["<header>", "<heading>", "<head>", "<top>"],
+    correctAnswer: "<header>"
+  },
+  {
+    question: "Which HTML tag is used to define a footer for a document or a section?",
+    options: ["<footer>", "<foot>", "<bottom>", "<end>"],
+    correctAnswer: "<footer>"
+  },
+  {
+    question: "Which HTML tag is used to define a section in a document?",
+    options: ["<section>", "<div>", "<article>", "<part>"],
+    correctAnswer: "<section>"
+  },
+  {
+    question: "Which HTML tag is used to define an independent, self-contained piece of content?",
+    options: ["<article>", "<div>", "<section>", "<content>"],
+    correctAnswer: "<article>"
+  },
+  {
+    question: "Which HTML tag is used to define a side column or sidebar?",
+    options: ["<aside>", "<sidebar>", "<column>", "<side>"],
+    correctAnswer: "<aside>"
+  },
+  {
+    question: "Which HTML tag is used to group related form elements?",
+    options: ["<fieldset>", "<group>", "<form-group>", "<field-group>"],
+    correctAnswer: "<fieldset>"
+  },
+  {
+    question: "Which HTML tag is used to define a label for a form element?",
+    options: ["<label>", "<text>", "<form-label>", "<element-label>"],
+    correctAnswer: "<label>"
+  },
+  {
+    question: "Which HTML tag is used to create a dropdown list in a form?",
+    options: ["<select>", "<dropdown>", "<list>", "<options>"],
+    correctAnswer: "<select>"
+  },
+  {
+    question: "Which HTML tag is used to define an option in a dropdown list?",
+    options: ["<option>", "<item>", "<choice>", "<select-option>"],
+    correctAnswer: "<option>"
+  },
+  {
+    question: "Which HTML tag is used to create a text area in a form?",
+    options: ["<textarea>", "<text-area>", "<multiline>", "<longtext>"],
+    correctAnswer: "<textarea>"
+  },
+  {
+    question: "Which HTML tag is used to create a progress bar?",
+    options: ["<progress>", "<bar>", "<loading>", "<progress-bar>"],
+    correctAnswer: "<progress>"
+  },
+  {
+    question: "Which HTML tag is used to create a meter (gauge)?",
+    options: ["<meter>", "<gauge>", "<level>", "<measure>"],
+    correctAnswer: "<meter>"
+  },
+  {
+    question: "Which HTML tag is used to define a description or value for an element?",
+    options: ["<dd>", "<description>", "<value>", "<define>"],
+    correctAnswer: "<dd>"
+  },
+  {
+    question: "Which HTML tag is used to define a key for a keyboard shortcut?",
+    options: ["<kbd>", "<key>", "<shortcut>", "<keyboard>"],
+    correctAnswer: "<kbd>"
+  },
+  {
+    question: "Which HTML tag is used to define computer code text?",
+    options: ["<code>", "<text>", "<program>", "<coding>"],
+    correctAnswer: "<code>"
+  },
+  {
+    question: "Which HTML tag is used to define sample output from a computer program?",
+    options: ["<samp>", "<output>", "<result>", "<program-output>"],
+    correctAnswer: "<samp>"
+  },
+  {
+    question: "Which HTML tag is used to define variable names in computer code?",
+    options: ["<var>", "<variable>", "<name>", "<code-variable>"],
+    correctAnswer: "<var>"
+  },
+  {
+    question: "Which HTML tag is used to define preformatted text?",
+    options: ["<pre>", "<format>", "<formatted>", "<pre-formatted>"],
+    correctAnswer: "<pre>"
+  },
+  {
+    question: "Which HTML tag is used to define a citation?",
+    options: ["<cite>", "<citation>", "<quote>", "<reference>"],
+    correctAnswer: "<cite>"
+  },
+  {
+    question: "Which HTML tag is used to define a block of quoted text?",
+    options: ["<blockquote>", "<quote>", "<citation>", "<block-quote>"],
+    correctAnswer: "<blockquote>"
+  },
+  {
+    question: "Which HTML tag is used to define an abbreviation?",
+    options: ["<abbr>", "<abbreviation>", "<short>", "<short-form>"],
+    correctAnswer: "<abbr>"
+  },
+  {
+    question: "Which HTML tag is used to define contact information?",
+    options: ["<address>", "<contact>", "<info>", "<contact-info>"],
+    correctAnswer: "<address>"
+  },
+  {
+    question: "Which HTML tag is used to define the base URL for all relative URLs in the document?",
+    options: ["<base>", "<url>", "<link-base>", "<document-base>"],
+    correctAnswer: "<base>"
+  },
+  {
+    question: "Which HTML tag is used to define a client-side script?",
+    options: ["<script>", "<javascript>", "<scripting>", "<client-script>"],
+    correctAnswer: "<script>"
+  },
+  {
+    question: "Which HTML tag is used to define a style sheet?",
+    options: ["<style>", "<css>", "<stylesheet>", "<style-sheet>"],
+    correctAnswer: "<style>"
+  },
+  {
+    question: "Which HTML tag is used to define a container for external application or interactive content (like plugins or embedded content)?",
+    options: ["<embed>", "<app>", "<plugin>", "<object>"],
+    correctAnswer: "<embed>"
+  },
+  {
+    question: "Which HTML tag is used to define an object embedded in the HTML document?",
+    options: ["<object>", "<embed>", "<app>", "<plugin>"],
+    correctAnswer: "<object>"
+  },
+  {
+    question: "Which HTML tag is used to define parameters for an object?",
+    options: ["<param>", "<parameter>", "<obj-param>", "<object-parameter>"],
+    correctAnswer: "<param>"
+  },
+  {
+    question: "Which HTML tag is used to define a source for the `<video>` or `<audio>` elements?",
+    options: ["<source>", "<src>", "<media-source>", "<video-source>"],
+    correctAnswer: "<source>"
+  },
+    {
+    question: "Which HTML tag is used to define a track for `<video>` and `<audio>` elements (for subtitles, captions, etc.)?",
+    options: ["<track>", "<subtitle>", "<caption>", "<text-track>"],
+    correctAnswer: "<track>"
+  },
+    {
+    question: "Which HTML tag is used to define alternative content for users who do not support scripts or if the script is disabled?",
+    options: ["<noscript>", "<no-script>", "<alt-script>", "<script-alternative>"],
+    correctAnswer: "<noscript>"
+  },
+  {
+    question: "Which HTML element is used to represent the outcome of a calculation or other operation?",
+    options: ["<output>", "<result>", "<calc>", "<calculation>"],
+    correctAnswer: "<output>"
+  },
+    {
+    question: "Which HTML element is used to define a list of options that the user can choose from?",
+    options: ["<datalist>", "<options>", "<choices>", "<select-list>"],
+    correctAnswer: "<datalist>"
+  },
+    {
+    question: "Which HTML element is used together with `<datalist>` to define the possible options for an input control?",
+    options: ["<option>", "<item>", "<choice>", "<data-option>"],
+    correctAnswer: "<option>"
+  },
+    {
+    question: "Which HTML element is used to create a key-pair generator field?",
+    options: ["<keygen>", "<key>", "<generate>", "<key-generator>"],
+    correctAnswer: "<keygen>"
+  },
+    {
+    question: "Which HTML element is used to define a field set containing a title (legend) for the fieldset?",
+    options: ["<fieldset>", "<legend>", "<field-title>", "<field-legend>"],
+    correctAnswer: "<fieldset>"
+  },
+    {
+    question: "Which HTML element is used to define a caption for a `<fieldset>` element?",
+    options: ["<legend>", "<caption>", "<field-caption>", "<fieldset-title>"],
+    correctAnswer: "<legend>"
+  },
+    {
+    question: "Which HTML element is used to define several form elements grouped together?",
+    options: ["<optgroup>", "<group>", "<option-group>", "<select-group>"],
+    correctAnswer: "<optgroup>"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target frame or window for a link?",
+    options: ["target", "href", "link", "window"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify an alternate text for an image?",
+    options: ["alt", "title", "src", "description"],
+    correctAnswer: "alt"
+  },
+  {
+    question: "Which HTML attribute is used to specify the width of an image?",
+    options: ["width", "height", "size", "dimension"],
+    correctAnswer: "width"
+  },
+  {
+    question: "Which HTML attribute is used to specify the height of an image?",
+    options: ["height", "width", "size", "dimension"],
+    correctAnswer: "height"
+  },
+  {
+    question: "Which HTML attribute is used to specify the source URL of an image?",
+    options: ["src", "href", "url", "image"],
+    correctAnswer: "src"
+  },
+  {
+    question: "Which HTML attribute is used to specify the title of an element?",
+    options: ["title", "alt", "label", "name"],
+    correctAnswer: "title"
+  },
+  {
+    question: "Which HTML attribute is used to specify the language of the content?",
+    options: ["lang", "language", "content-lang", "xml:lang"],
+    correctAnswer: "lang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the direction of the text?",
+    options: ["dir", "direction", "text-dir", "text-direction"],
+    correctAnswer: "dir"
+  },
+  {
+    question: "Which HTML attribute is used to specify the character encoding for the HTML document?",
+    options: ["charset", "encoding", "char-encoding", "character-set"],
+    correctAnswer: "charset"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media type of a linked resource?",
+    options: ["media", "type", "resource-type", "link-type"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the relationship between the current document and the linked resource?",
+    options: ["rel", "relationship", "link-rel", "resource-rel"],
+    correctAnswer: "rel"
+  },
+  {
+    question: "Which HTML attribute is used to specify the sizes of the linked resource?",
+    options: ["sizes", "size", "dimensions", "resource-size"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target URL for a link?",
+    options: ["href", "url", "link", "target"],
+    correctAnswer: "href"
+  },
+  {
+    question: "Which HTML attribute is used to specify the type of the linked resource?",
+    options: ["type", "media", "resource-type", "link-type"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the value of an input element?",
+    options: ["value", "text", "data", "input-value"],
+    correctAnswer: "value"
+  },
+  {
+    question: "Which HTML attribute is used to specify the name of an input element?",
+    options: ["name", "id", "label", "title"],
+    correctAnswer: "name"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field should be read-only?",
+    options: ["readonly", "read-only", "disabled", "no-edit"],
+    correctAnswer: "readonly"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field is disabled?",
+    options: ["disabled", "readonly", "enabled", "no-input"],
+    correctAnswer: "disabled"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field is required?",
+    options: ["required", "mandatory", "essential", "needed"],
+    correctAnswer: "required"
+  },
+  {
+    question: "Which HTML attribute is used to specify the maximum value for an input field?",
+    options: ["max", "maximum", "limit", "upper-bound"],
+    correctAnswer: "max"
+  },
+  {
+    question: "Which HTML attribute is used to specify the minimum value for an input field?",
+    options: ["min", "minimum", "limit", "lower-bound"],
+    correctAnswer: "min"
+  },
+  {
+    question: "Which HTML attribute is used to specify the step interval for an input field?",
+    options: ["step", "interval", "increment", "range"],
+    correctAnswer: "step"
+  },
+  {
+    question: "Which HTML attribute is used to specify the placeholder text for an input field?",
+    options: ["placeholder", "hint", "prompt", "example"],
+    correctAnswer: "placeholder"
+  },
+  {
+    question: "Which HTML attribute is used to specify the autocomplete behavior for an input field?",
+    options: ["autocomplete", "autofill", "autosuggest", "autocorrect"],
+    correctAnswer: "autocomplete"
+  },
+  {
+    question: "Which HTML attribute is used to specify the multiple selection of options in a select element?",
+    options: ["multiple", "multi", "select-multiple", "many"],
+    correctAnswer: "multiple"
+  },
+  {
+    question: "Which HTML attribute is used to specify the size of a select element?",
+    options: ["size", "length", "rows", "columns"],
+    correctAnswer: "size"
+  },
+  {
+    question: "Which HTML attribute is used to specify the wrap behavior for a textarea?",
+    options: ["wrap", "text-wrap", "wrap-text", "text-wrapping"],
+    correctAnswer: "wrap"
+  },
+  {
+    question: "Which HTML attribute is used to specify the number of visible lines in a textarea?",
+    options: ["rows", "lines", "height", "size"],
+    correctAnswer: "rows"
+  },
+  {
+    question: "Which HTML attribute is used to specify the number of characters per line in a textarea?",
+    options: ["cols", "columns", "width", "size"],
+    correctAnswer: "cols"
+  },
+  {
+    question: "Which HTML attribute is used to specify the form that an element belongs to?",
+    options: ["form", "form-id", "form-name", "form-element"],
+    correctAnswer: "form"
+  },
+  {
+    question: "Which HTML attribute is used to specify the action to be performed when the form is submitted?",
+    options: ["action", "submit", "process", "handler"],
+    correctAnswer: "action"
+  },
+  {
+    question: "Which HTML attribute is used to specify the method to be used when submitting the form data?",
+    options: ["method", "type", "send", "submit-method"],
+    correctAnswer: "method"
+  },
+  {
+    question: "Which HTML attribute is used to specify the encoding type for the form data?",
+    options: ["enctype", "encoding", "content-type", "data-type"],
+    correctAnswer: "enctype"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target for the form submission?",
+    options: ["target", "destination", "submit-target", "form-target"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to associate a label with a form element?",
+    options: ["for", "id", "name", "element"],
+    correctAnswer: "for"
+  },
+  {
+    question: "Which HTML attribute is used to specify the type of button?",
+    options: ["type", "button-type", "kind", "action"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media query for a linked resource?",
+    options: ["media", "query", "media-query", "screen"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the language code for the content?",
+    options: ["lang", "language", "content-lang", "xml:lang"],
+    correctAnswer: "lang"
+  },
+    {
+    question: "Which HTML attribute is used to specify the directionality of text?",
+    options: ["dir", "direction", "text-dir", "text-direction"],
+    correctAnswer: "dir"
+  },
+  {
+    question: "Which HTML attribute is used to specify the sizes of icons for different devices?",
+    options: ["sizes", "size", "icon-sizes", "device-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the integrity of a linked resource?",
+    options: ["integrity", "hash", "checksum", "security"],
+    correctAnswer: "integrity"
+  },
+  {
+    question: "Which HTML attribute is used to specify the cross-origin resource sharing (CORS) settings for a linked resource?",
+    options: ["crossorigin", "cors", "origin", "access"],
+    correctAnswer: "crossorigin"
+  },
+    {
+    question: "Which HTML attribute is used to specify the referrer policy for a linked resource?",
+    options: ["referrerpolicy", "referrer", "policy", "referer-policy"],
+    correctAnswer: "referrerpolicy"
+  },
+  {
+    question: "Which HTML attribute is used to specify the ping URLs to be notified if the linked resource is loaded?",
+    options: ["ping", "track", "notify", "report"],
+    correctAnswer: "ping"
+  },
+  {
+    question: "Which HTML attribute is used to specify the relationship between the current document and the linked resource (reverse relationship)?",
+    options: ["rev", "rel", "reverse", "back"],
+    correctAnswer: "rev"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media query list that the linked resource is intended for?",
+    options: ["media", "query", "media-query", "list"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target context for the linked resource?",
+    options: ["target", "context", "link-context", "resource-context"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify the download filename for the linked resource?",
+    options: ["download", "filename", "save-as", "get"],
+    correctAnswer: "download"
+  },
+  {
+    question: "Which HTML attribute is used to specify the hreflang of the linked resource?",
+    options: ["hreflang", "lang", "language", "href-lang"],
+    correctAnswer: "hreflang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the sizes attribute for the linked resource?",
+    options: ["sizes", "size", "dimensions", "icon-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `type` attribute for the linked resource?",
+    options: ["type", "media", "content-type", "mime-type"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `rel` attribute for the linked resource?",
+    options: ["rel", "relationship", "link-rel", "resource-rel"],
+    correctAnswer: "rel"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `rev` attribute for the linked resource?",
+    options: ["rev", "reverse", "rel", "rev-rel"],
+    correctAnswer: "rev"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `target` attribute for the linked resource?",
+    options: ["target", "destination", "link-target", "resource-target"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `hreflang` attribute for the linked resource?",
+    options: ["hreflang", "lang", "language", "href-lang"],
+    correctAnswer: "hreflang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `media` attribute for the linked resource?",
+    options: ["media", "query", "media-query", "screen"],
+    correctAnswer: "media"
+  },
+    {
+    question: "Which HTML attribute is used to specify the `sizes` attribute for the linked resource?",
+    options: ["sizes", "size", "dimensions", "icon-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `integrity` attribute for the linked resource?",
+    options: ["integrity", "hash", "checksum", "security"],
+    correctAnswer: "integrity"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `crossorigin` attribute for the linked resource?",
+    options: ["crossorigin", "cors", "origin", "access"],
+    correctAnswer: "crossorigin"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `referrerpolicy` attribute for the linked resource?",
+    options: ["referrerpolicy", "referrer", "policy", "referer-policy"],
+    correctAnswer: "referrerpolicy"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `ping` attribute for the linked resource?",
+    options: ["ping", "track", "notify", "report"],
+    correctAnswer: "ping"
+  },
+    {
+    question: "What does the `scope` attribute in HTML do for table headers?",
+    options: ["Defines the scope of a header cell", "Specifies the style of the header cell", "Indicates the importance of the header cell", "Links the header cell to a specific data cell"],
+    correctAnswer: "Defines the scope of a header cell"
+  },
+    {
+    question: "What does the `colspan` attribute in HTML do for table cells?",
+    options: ["Specifies the number of columns a cell should span", "Defines the color of the cell", "Sets the alignment of the cell content", "Determines the height of the cell"],
+    correctAnswer: "Specifies the number of columns a cell should span"
+  },
+    {
+    question: "What does the `rowspan` attribute in HTML do for table cells?",
+    options: ["Specifies the number of rows a cell should span", "Sets the background color of the cell", "Defines the width of the cell", "Determines the font size of the cell content"],
+    correctAnswer: "Specifies the number of rows a cell should span"
+  },
+  {
+    question: "Which HTML tag is used to define a dialog box or window?",
+    options: ["<dialog>", "<window>", "<popup>", "<modal>"],
+    correctAnswer: "<dialog>"
+  },
+  {
+    question: "Which HTML tag is used to define a figure with an optional caption?",
+    options: ["<figure>", "<image-group>", "<picture-group>", "<media-group>"],
+    correctAnswer: "<figure>"
+  },
+  {
+    question: "Which HTML tag is used to define a caption for a `<figure>` element?",
+    options: ["<figcaption>", "<figure-caption>", "<caption>", "<fig-caption>"],
+    correctAnswer: "<figcaption>"
+  },
+  {
+    question: "Which HTML tag is used to define a highlighted portion of text?",
+    options: ["<mark>", "<highlight>", "<emphasize>", "<emphasized>"],
+    correctAnswer: "<mark>"
+  },
+  {
+    question: "Which HTML tag is used to define a time or a date?",
+    options: ["<time>", "<date>", "<datetime>", "<event-time>"],
+    correctAnswer: "<time>"
+  },
+  {
+    question: "Which HTML tag is used to define a variable in mathematics or programming?",
+    options: ["<var>", "<variable>", "<math-var>", "<code-var>"],
+    correctAnswer: "<var>"
+  },
+  {
+    question: "Which HTML tag is used to define a line break opportunity?",
+    options: ["<wbr>", "<break>", "<line-break>", "<word-break>"],
+    correctAnswer: "<wbr>"
+  },
+  {
+    question: "Which HTML tag is used to define a text area that allows the user to enter multiple lines of text?",
+    options: ["<textarea>", "<multiline>", "<text-area>", "<longtext>"],
+    correctAnswer: "<textarea>"
+  },
+  {
+    question: "Which HTML tag is used to define a set of key/value pairs?",
+    options: ["<map>", "<data>", "<pairs>", "<key-values>"],
+    correctAnswer: "<map>"
+  },
+  {
+    question: "Which HTML tag is used to define an area inside an image map?",
+    options: ["<area>", "<map-area>", "<image-area>", "<click-area>"],
+    correctAnswer: "<area>"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target frame or window for a link?",
+    options: ["target", "href", "link", "window"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify an alternate text for an image?",
+    options: ["alt", "title", "src", "description"],
+    correctAnswer: "alt"
+  },
+  {
+    question: "Which HTML attribute is used to specify the width of an image?",
+    options: ["width", "height", "size", "dimension"],
+    correctAnswer: "width"
+  },
+  {
+    question: "Which HTML attribute is used to specify the height of an image?",
+    options: ["height", "width", "size", "dimension"],
+    correctAnswer: "height"
+  },
+  {
+    question: "Which HTML attribute is used to specify the source URL of an image?",
+    options: ["src", "href", "url", "image"],
+    correctAnswer: "src"
+  },
+  {
+    question: "Which HTML attribute is used to specify the title of an element?",
+    options: ["title", "alt", "label", "name"],
+    correctAnswer: "title"
+  },
+  {
+    question: "Which HTML attribute is used to specify the language of the content?",
+    options: ["lang", "language", "content-lang", "xml:lang"],
+    correctAnswer: "lang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the direction of the text?",
+    options: ["dir", "direction", "text-dir", "text-direction"],
+    correctAnswer: "dir"
+  },
+  {
+    question: "Which HTML attribute is used to specify the character encoding for the HTML document?",
+    options: ["charset", "encoding", "char-encoding", "character-set"],
+    correctAnswer: "charset"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media type of a linked resource?",
+    options: ["media", "type", "resource-type", "link-type"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the relationship between the current document and the linked resource?",
+    options: ["rel", "relationship", "link-rel", "resource-rel"],
+    correctAnswer: "rel"
+  },
+  {
+    question: "Which HTML attribute is used to specify the sizes of the linked resource?",
+    options: ["sizes", "size", "dimensions", "resource-size"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target URL for a link?",
+    options: ["href", "url", "link", "target"],
+    correctAnswer: "href"
+  },
+  {
+    question: "Which HTML attribute is used to specify the type of the linked resource?",
+    options: ["type", "media", "resource-type", "link-type"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the value of an input element?",
+    options: ["value", "text", "data", "input-value"],
+    correctAnswer: "value"
+  },
+  {
+    question: "Which HTML attribute is used to specify the name of an input element?",
+    options: ["name", "id", "label", "title"],
+    correctAnswer: "name"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field should be read-only?",
+    options: ["readonly", "read-only", "disabled", "no-edit"],
+    correctAnswer: "readonly"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field is disabled?",
+    options: ["disabled", "readonly", "enabled", "no-input"],
+    correctAnswer: "disabled"
+  },
+  {
+    question: "Which HTML attribute is used to specify that an input field is required?",
+    options: ["required", "mandatory", "essential", "needed"],
+    correctAnswer: "required"
+  },
+  {
+    question: "Which HTML attribute is used to specify the maximum value for an input field?",
+    options: ["max", "maximum", "limit", "upper-bound"],
+    correctAnswer: "max"
+  },
+  {
+    question: "Which HTML attribute is used to specify the minimum value for an input field?",
+    options: ["min", "minimum", "limit", "lower-bound"],
+    correctAnswer: "min"
+  },
+  {
+    question: "Which HTML attribute is used to specify the step interval for an input field?",
+    options: ["step", "interval", "increment", "range"],
+    correctAnswer: "step"
+  },
+  {
+    question: "Which HTML attribute is used to specify the placeholder text for an input field?",
+    options: ["placeholder", "hint", "prompt", "example"],
+    correctAnswer: "placeholder"
+  },
+  {
+    question: "Which HTML attribute is used to specify the autocomplete behavior for an input field?",
+    options: ["autocomplete", "autofill", "autosuggest", "autocorrect"],
+    correctAnswer: "autocomplete"
+  },
+  {
+    question: "Which HTML attribute is used to specify the multiple selection of options in a select element?",
+    options: ["multiple", "multi", "select-multiple", "many"],
+    correctAnswer: "multiple"
+  },
+  {
+    question: "Which HTML attribute is used to specify the size of a select element?",
+    options: ["size", "length", "rows", "columns"],
+    correctAnswer: "size"
+  },
+  {
+    question: "Which HTML attribute is used to specify the wrap behavior for a textarea?",
+    options: ["wrap", "text-wrap", "wrap-text", "text-wrapping"],
+    correctAnswer: "wrap"
+  },
+  {
+    question: "Which HTML attribute is used to specify the number of visible lines in a textarea?",
+    options: ["rows", "lines", "height", "size"],
+    correctAnswer: "rows"
+  },
+  {
+    question: "Which HTML attribute is used to specify the number of characters per line in a textarea?",
+    options: ["cols", "columns", "width", "size"],
+    correctAnswer: "cols"
+  },
+  {
+    question: "Which HTML attribute is used to specify the form that an element belongs to?",
+    options: ["form", "form-id", "form-name", "form-element"],
+    correctAnswer: "form"
+  },
+  {
+    question: "Which HTML attribute is used to specify the action to be performed when the form is submitted?",
+    options: ["action", "submit", "process", "handler"],
+    correctAnswer: "action"
+  },
+  {
+    question: "Which HTML attribute is used to specify the method to be used when submitting the form data?",
+    options: ["method", "type", "send", "submit-method"],
+    correctAnswer: "method"
+  },
+  {
+    question: "Which HTML attribute is used to specify the encoding type for the form data?",
+    options: ["enctype", "encoding", "content-type", "data-type"],
+    correctAnswer: "enctype"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target for the form submission?",
+    options: ["target", "destination", "submit-target", "form-target"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to associate a label with a form element?",
+    options: ["for", "id", "name", "element"],
+    correctAnswer: "for"
+  },
+  {
+    question: "Which HTML attribute is used to specify the type of button?",
+    options: ["type", "button-type", "kind", "action"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media query for a linked resource?",
+    options: ["media", "query", "media-query", "screen"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the language code for the content?",
+    options: ["lang", "language", "content-lang", "xml:lang"],
+    correctAnswer: "lang"
+  },
+    {
+    question: "Which HTML attribute is used to specify the directionality of text?",
+    options: ["dir", "direction", "text-dir", "text-direction"],
+    correctAnswer: "dir"
+  },
+
+   {
+    question: "Which HTML attribute is used to specify the sizes of icons for different devices?",
+    options: ["sizes", "size", "icon-sizes", "device-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the integrity of a linked resource?",
+    options: ["integrity", "hash", "checksum", "security"],
+    correctAnswer: "integrity"
+  },
+  {
+    question: "Which HTML attribute is used to specify the cross-origin resource sharing (CORS) settings for a linked resource?",
+    options: ["crossorigin", "cors", "origin", "access"],
+    correctAnswer: "crossorigin"
+  },
+    {
+    question: "Which HTML attribute is used to specify the referrer policy for a linked resource?",
+    options: ["referrerpolicy", "referrer", "policy", "referer-policy"],
+    correctAnswer: "referrerpolicy"
+  },
+  {
+    question: "Which HTML attribute is used to specify the ping URLs to be notified if the linked resource is loaded?",
+    options: ["ping", "track", "notify", "report"],
+    correctAnswer: "ping"
+  },
+  {
+    question: "Which HTML attribute is used to specify the relationship between the current document and the linked resource (reverse relationship)?",
+    options: ["rev", "rel", "reverse", "back"],
+    correctAnswer: "rev"
+  },
+  {
+    question: "Which HTML attribute is used to specify the media query list that the linked resource is intended for?",
+    options: ["media", "query", "media-query", "list"],
+    correctAnswer: "media"
+  },
+  {
+    question: "Which HTML attribute is used to specify the target context for the linked resource?",
+    options: ["target", "context", "link-context", "resource-context"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify the download filename for the linked resource?",
+    options: ["download", "filename", "save-as", "get"],
+    correctAnswer: "download"
+  },
+  {
+    question: "Which HTML attribute is used to specify the hreflang of the linked resource?",
+    options: ["hreflang", "lang", "language", "href-lang"],
+    correctAnswer: "hreflang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the sizes attribute for the linked resource?",
+    options: ["sizes", "size", "dimensions", "icon-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `type` attribute for the linked resource?",
+    options: ["type", "media", "content-type", "mime-type"],
+    correctAnswer: "type"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `rel` attribute for the linked resource?",
+    options: ["rel", "relationship", "link-rel", "resource-rel"],
+    correctAnswer: "rel"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `rev` attribute for the linked resource?",
+    options: ["rev", "reverse", "rel", "rev-rel"],
+    correctAnswer: "rev"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `target` attribute for the linked resource?",
+    options: ["target", "destination", "link-target", "resource-target"],
+    correctAnswer: "target"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `hreflang` attribute for the linked resource?",
+    options: ["hreflang", "lang", "language", "href-lang"],
+    correctAnswer: "hreflang"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `media` attribute for the linked resource?",
+    options: ["media", "query", "media-query", "screen"],
+    correctAnswer: "media"
+  },
+    {
+    question: "Which HTML attribute is used to specify the `sizes` attribute for the linked resource?",
+    options: ["sizes", "size", "dimensions", "icon-sizes"],
+    correctAnswer: "sizes"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `integrity` attribute for the linked resource?",
+    options: ["integrity", "hash", "checksum", "security"],
+    correctAnswer: "integrity"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `crossorigin` attribute for the linked resource?",
+    options: ["crossorigin", "cors", "origin", "access"],
+    correctAnswer: "crossorigin"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `referrerpolicy` attribute for the linked resource?",
+    options: ["referrerpolicy", "referrer", "policy", "referer-policy"],
+    correctAnswer: "referrerpolicy"
+  },
+  {
+    question: "Which HTML attribute is used to specify the `ping` attribute for the linked resource?",
+    options: ["ping", "track", "notify", "report"],
+    correctAnswer: "ping"
+  },
+    {
+    question: "What does the `scope` attribute in HTML do for table headers?",
+    options: ["Defines the scope of a header cell", "Specifies the style of the header cell", "Indicates the importance of the header cell", "Links the header cell to a specific data cell"],
+    correctAnswer: "Defines the scope of a header cell"
+  },
+    {
+    question: "What does the `colspan` attribute in HTML do for table cells?",
+    options: ["Specifies the number of columns a cell should span", "Defines the color of the cell", "Sets the alignment of the cell content", "Determines the height of the cell"],
+    correctAnswer: "Specifies the number of columns a cell should span"
+  },
+    {
+    question: "What does the `rowspan` attribute in HTML do for table cells?",
+    options: ["Specifies the number of rows a cell should span", "Sets the background color of the cell", "Defines the width of the cell", "Determines the font size of the cell content"],
+    correctAnswer: "Specifies the number of rows a cell should span"
+  },
+  {
+    question: "Which HTML tag is used to define a dialog box or window?",
+    options: ["<dialog>", "<window>", "<popup>", "<modal>"],
+    correctAnswer: "<dialog>"
+  },
+  {
+    question: "Which HTML tag is used to define a figure with an optional caption?",
+    options: ["<figure>", "<image-group>", "<picture-group>", "<media-group>"],
+    correctAnswer: "<figure>"
+  },
+  {
+    question: "Which HTML tag is used to define a caption for a `<figure>` element?",
+    options: ["<figcaption>", "<figure-caption>", "<caption>", "<fig-caption>"],
+    correctAnswer: "<figcaption>"
+  },
+  {
+    question: "Which HTML tag is used to define a highlighted portion of text?",
+    options: ["<mark>", "<highlight>", "<emphasize>", "<emphasized>"],
+    correctAnswer: "<mark>"
+  },
+  {
+    question: "Which HTML tag is used to define a time or a date?",
+    options: ["<time>", "<date>", "<datetime>", "<event-time>"],
+    correctAnswer: "<time>"
+  },
+  {
+    question: "Which HTML tag is used to define a variable in mathematics or programming?",
+    options: ["<var>", "<variable>", "<math-var>", "<code-var>"],
+    correctAnswer: "<var>"
+  },
+  {
+    question: "Which HTML tag is used to define a line break opportunity?",
+    options: ["<wbr>", "<break>", "<line-break>", "<word-break>"],
+    correctAnswer: "<wbr>"
+  },
+  {
+    question: "Which HTML tag is used to define a text area that allows the user to enter multiple lines of text?",
+    options: ["<textarea>", "<multiline>", "<text-area>", "<longtext>"],
+    correctAnswer: "<textarea>"
+  },
+  {
+    question: "Which HTML tag is used to define a set of key/value pairs?",
+    options: ["<map>", "<data>", "<pairs>", "<key-values>"],
+    correctAnswer: "<map>"
+  },
+  {
+    question: "Which HTML tag is used to define an area inside an image map?",
+    options: ["<area>", "<map-area>", "<image-area>", "<click-area>"],
+    correctAnswer: "<area>"
+  },
+  {
+    question: "Which HTML element is used to define a definition description?",
+    options: ["<dd>", "<description>", "<definition>", "<define-description>"],
+    correctAnswer: "<dd>"
+  },
+  {
+    question: "Which HTML element is used to define a keyboard key?",
+    options: ["<kbd>", "<key>", "<keyboard>", "<key-input>"],
+    correctAnswer: "<kbd>"
+  },
+  {
+    question: "Which HTML element is used to define preformatted text?",
+    options: ["<pre>", "<formatted>", "<preformat>", "<pre-formatted>"],
+    correctAnswer: "<pre>"
+  },
+  {
+    question: "Which HTML element is used to define sample output from a computer program?",
+    options: ["<samp>", "<output>", "<sample>", "<program-output>"],
+    correctAnswer: "<samp>"
+  },
+  {
+    question: "Which HTML element is used to define a variable?",
+    options: ["<var>", "<variable>", "<variable-name>", "<code-variable>"],
+    correctAnswer: "<var>"
+  },
+  {
+    question: "Which HTML element is used to define an abbreviation or acronym?",
+    options: ["<abbr>", "<abbreviation>", "<acronym>", "<short-form>"],
+    correctAnswer: "<abbr>"
+  },
+  {
+    question: "Which HTML element is used to define a citation?",
+    options: ["<cite>", "<citation>", "<reference>", "<quote-source>"],
+    correctAnswer: "<cite>"
+  },
+  {
+    question: "Which HTML element is used to define a block quotation?",
+    options: ["<blockquote>", "<quote>", "<block-quote>", "<citation-block>"],
+    correctAnswer: "<blockquote>"
+  },
+  {
+    question: "Which HTML element is used to define deleted text?",
+    options: ["<del>", "<delete>", "<deleted>", "<remove>"],
+    correctAnswer: "<del>"
+  },
+  {
+    question: "Which HTML element is used to define inserted text?",
+    options: ["<ins>", "<insert>", "<inserted>", "<add>"],
+    correctAnswer: "<ins>"
+  },
+  {
+    question: "Which HTML element is used to define subscript text?",
+    options: ["<sub>", "<subscript>", "<down>", "<lower>"],
+    correctAnswer: "<sub>"
+  },
+  {
+    question: "Which HTML element is used to define superscript text?",
+    options: ["<sup>", "<superscript>", "<up>", "<upper>"],
+    correctAnswer: "<sup>"
+  },
+  {
+    question: "Which HTML element is used to define small text?",
+    options: ["<small>", "<smaller>", "<tiny>", "<reduced>"],
+    correctAnswer: "<small>"
+  },
+  {
+    question: "Which HTML element is used to define strong importance?",
+    options: ["<strong>", "<stronger>", "<important>", "<emphasized>"],
+    correctAnswer: "<strong>"
+  },
+  {
+    question: "Which HTML element is used to define emphasized text?",
+    options: ["<em>", "<emphasized>", "<emphasis>", "<italicized>"],
+    correctAnswer: "<em>"
+  },
+  {
+    question: "Which HTML element is used to define a code snippet?",
+    options: ["<code>", "<snippet>", "<code-snippet>", "<program-code>"],
+    correctAnswer: "<code>"
+  },
+  {
+    question: "Which HTML element is used to define an address?",
+    options: ["<address>", "<contact>", "<location>", "<contact-info>"],
+    correctAnswer: "<address>"
+  },
+
+]
+
+
+
+function displayQuestions() {
+    questions.forEach((questionData, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.innerHTML = `<h3>${index + 1}. ${questionData.question}</h3>`;
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+
+        questionData.options.forEach(option => {
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `q${index}`;
+            input.value = option;
+            input.id = `q${index}-${option}`;
+            label.htmlFor = `q${index}-${option}`;
+            label.textContent = option;
+
+            optionsDiv.appendChild(input);
+            optionsDiv.appendChild(label);
+        });
+
+        questionDiv.appendChild(optionsDiv);
+
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'result';
+        questionDiv.appendChild(resultDiv);
+
+        quizContainer.appendChild(questionDiv);
+    });
+}
+
+function checkAnswers() {
+    questions.forEach((questionData, index) => {
+        const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+        const resultDiv = document.querySelectorAll('.result')[index];
+
+        if (selectedOption) {
+            const userAnswer = selectedOption.value;
+            if (userAnswer === questionData.correctAnswer) {
+                resultDiv.textContent = "Correct!";
+                resultDiv.className = 'result correct';
+            } else {
+                resultDiv.textContent = `Incorrect. The correct answer is ${questionData.correctAnswer}.`;
+                resultDiv.className = 'result incorrect';
+            }
+        } else {
+            resultDiv.textContent = "Please select an answer.";
+            resultDiv.className = 'result incorrect';
+        }
+    });
+}
+
+function forEachQuestion() {
+  questions.forEach((qdata, index) => {
+    const questionDiv = document.querySelectorAll('.question')[index]; // Get the question div
+
+    // Add event listeners to radio buttons for each question
+    const options = questionDiv.querySelectorAll('input[type="radio"]');
+    options.forEach(option => {
+      option.addEventListener('change', () => {
+        const selectedOption = questionDiv.querySelector(`input[name="q${index}"]:checked`);
+        const resultDiv = questionDiv.querySelector('.result');
+
+        if (selectedOption) {
+          const userAnswer = selectedOption.value;
+          if (userAnswer === qdata.correctAnswer) {
+            resultDiv.textContent = "Correct!";
+            resultDiv.className = 'result correct';
+          } else {
+            resultDiv.textContent = `Incorrect. The correct answer is ${qdata.correctAnswer}.`;
+            resultDiv.className = 'result incorrect';
+          }
+        } else {
+          resultDiv.textContent = "Please select an answer.";
+          resultDiv.className = 'result incorrect';
+        }
+      });
+    });
+  });
+}
+
+// Call the function after the questions are displayed.
+// This is important, otherwise the event listeners won't be attached
+// to the dynamically created elements.
+window.addEventListener('DOMContentLoaded', forEachQuestion); // Best practice
+// OR if you are sure that the elements are available after displayQuestions()
+// you can simply call it after displayQuestions()
+
+displayQuestions();
+
+const submitButton = document.createElement('button');
+submitButton.textContent = 'Submit Answers';
+submitButton.onclick = checkAnswers;
+quizContainer.appendChild(submitButton);
+
+</script>
+
+</body>
+</html>
